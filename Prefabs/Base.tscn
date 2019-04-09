@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Art/EntityBase/m_EntityBase.tres" type="Material" id=1]
+
+[sub_resource type="CylinderMesh" id=1]
+
+[node name="Base" type="Spatial"]
+
+[node name="Cylinder" type="MeshInstance" parent="."]
+transform = Transform( 1.2, 0, 0, 0, 0.2, 0, 0, 0, 1.2, 0, 0, 0 )
+mesh = SubResource( 1 )
+material/0 = ExtResource( 1 )
+

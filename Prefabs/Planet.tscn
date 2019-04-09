@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Art/Planet/Planet.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://Art/Planet/m_PinkPlanet5.tres" type="Material" id=2]
+[ext_resource path="res://Art/Planet/m_PinkPlanet2.tres" type="Material" id=3]
+[ext_resource path="res://Art/Planet/m_PinkPlanet4.tres" type="Material" id=4]
+[ext_resource path="res://Art/Planet/m_PinkPlanet3.tres" type="Material" id=5]
+[ext_resource path="res://Art/Planet/m_PinkPlanet.tres" type="Material" id=6]
+[ext_resource path="res://Scripts/PlanetAnimation.gd" type="Script" id=7]
+
+[node name="Planet" type="Spatial"]
+
+[node name="Planet" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0325069, 0.0570469, 0.0827541 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 2 )
+material/1 = ExtResource( 3 )
+material/2 = ExtResource( 2 )
+material/3 = ExtResource( 3 )
+material/4 = ExtResource( 2 )
+material/5 = ExtResource( 3 )
+material/6 = ExtResource( 2 )
+material/7 = ExtResource( 3 )
+material/8 = ExtResource( 2 )
+material/9 = ExtResource( 3 )
+material/10 = ExtResource( 2 )
+material/11 = ExtResource( 3 )
+material/12 = ExtResource( 2 )
+material/13 = ExtResource( 3 )
+material/14 = ExtResource( 2 )
+material/15 = ExtResource( 3 )
+material/16 = ExtResource( 2 )
+material/17 = ExtResource( 3 )
+material/18 = ExtResource( 2 )
+material/19 = ExtResource( 4 )
+material/20 = ExtResource( 5 )
+material/21 = ExtResource( 2 )
+material/22 = ExtResource( 6 )
+script = ExtResource( 7 )
+

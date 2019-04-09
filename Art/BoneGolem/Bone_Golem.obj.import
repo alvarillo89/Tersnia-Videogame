@@ -1,0 +1,18 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Bone_Golem.obj-5f22af662dcf609c57802b822a028d65.mesh"
+
+[deps]
+
+files=[ "res://.import/Bone_Golem.obj-5f22af662dcf609c57802b822a028d65.mesh" ]
+
+source_file="res://Art/BoneGolem/Bone_Golem.obj"
+dest_files=[ "res://.import/Bone_Golem.obj-5f22af662dcf609c57802b822a028d65.mesh", "res://.import/Bone_Golem.obj-5f22af662dcf609c57802b822a028d65.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+optimize_mesh=true

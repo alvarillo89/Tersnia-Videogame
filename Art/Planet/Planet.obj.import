@@ -1,0 +1,18 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Planet.obj-5ef236a5eea0b9ca76aec7f57acc8ca5.mesh"
+
+[deps]
+
+files=[ "res://.import/Planet.obj-5ef236a5eea0b9ca76aec7f57acc8ca5.mesh" ]
+
+source_file="res://Art/Planet/Planet.obj"
+dest_files=[ "res://.import/Planet.obj-5ef236a5eea0b9ca76aec7f57acc8ca5.mesh", "res://.import/Planet.obj-5ef236a5eea0b9ca76aec7f57acc8ca5.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+optimize_mesh=true

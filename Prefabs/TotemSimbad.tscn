@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Art/Totems/Totem.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://Art/Totems/m_TotemSimbad.tres" type="Material" id=2]
+
+[node name="TotemSimbad" type="Spatial"]
+
+[node name="Totem" type="MeshInstance" parent="."]
+transform = Transform( 0.2, 0, 0, 0, 0.4, 0, 0, 0, 0.2, 0, 0, 0 )
+mesh = ExtResource( 1 )
+material/0 = ExtResource( 2 )
+

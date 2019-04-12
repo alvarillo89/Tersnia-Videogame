@@ -11,7 +11,7 @@
 [sub_resource type="PrismMesh" id=2]
 
 [sub_resource type="SpatialMaterial" id=3]
-albedo_color = Color( 1, 0.211765, 0.211765, 1 )
+albedo_color = Color( 0.211765, 0.262745, 1, 1 )
 
 [node name="Simbad" type="Spatial"]
 

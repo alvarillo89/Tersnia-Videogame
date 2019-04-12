@@ -46,7 +46,9 @@ func _ready():
 	# y el valor será su posición en coordenadas de celda:
 	entities = {
 		get_parent().get_node("BoneGolem"): Vector2(1,1),
-		get_parent().get_node("Simbad"): Vector2(1,3)
+		get_parent().get_node("Simbad"): Vector2(1,3),
+		get_parent().get_node("EnemySimbad"): Vector2(8,1),
+		get_parent().get_node("EnemyRobot"): Vector2(8,3)
 	}
 
 

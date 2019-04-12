@@ -1,0 +1,57 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Prefabs/Base.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Art/Simbad/Sinbad.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://Art/Simbad/m_enem_Simbad_body.tres" type="Material" id=3]
+[ext_resource path="res://Art/Simbad/m_Simbad_body.tres" type="Material" id=4]
+[ext_resource path="res://Art/Simbad/m_enem_Simbad_clothes.tres" type="Material" id=5]
+[ext_resource path="res://Art/Simbad/m_Simbad_swords.tres" type="Material" id=6]
+
+[sub_resource type="CapsuleShape" id=1]
+
+[sub_resource type="PrismMesh" id=2]
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 1, 0.211765, 0.211765, 1 )
+
+[node name="EnemySimbad" type="Spatial"]
+
+[node name="Base" parent="." instance=ExtResource( 1 )]
+
+[node name="eMesh" type="MeshInstance" parent="."]
+transform = Transform( 0.45, 0, 0, 0, 0.45, 0, 0, 0, 0.45, 0, 2.46424, 0 )
+mesh = ExtResource( 2 )
+material/0 = ExtResource( 3 )
+material/1 = ExtResource( 4 )
+material/2 = ExtResource( 4 )
+material/3 = ExtResource( 5 )
+material/4 = ExtResource( 5 )
+material/5 = ExtResource( 5 )
+material/6 = ExtResource( 6 )
+material/7 = ExtResource( 6 )
+material/8 = ExtResource( 6 )
+material/9 = ExtResource( 6 )
+material/10 = ExtResource( 6 )
+material/11 = ExtResource( 6 )
+material/12 = ExtResource( 6 )
+material/13 = ExtResource( 6 )
+material/14 = ExtResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="StaticBody" type="StaticBody" parent="eMesh"]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="eMesh/StaticBody"]
+transform = Transform( 2, 0, 0, 0, -8.74228e-008, -3, 0, 2, -1.31134e-007, 0, -0.647185, 0 )
+shape = SubResource( 1 )
+
+[node name="Arrow" type="MeshInstance" parent="."]
+transform = Transform( -0.3, 5.24537e-008, 0, -2.62268e-008, -0.6, 0, 0, 0, 0.1, 0, 5.846, 0 )
+visible = false
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+

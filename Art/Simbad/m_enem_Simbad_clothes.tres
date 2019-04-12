@@ -1,0 +1,8 @@
+[gd_resource type="SpatialMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://Art/Simbad/sinbad_clothes.png" type="Texture" id=1]
+
+[resource]
+albedo_color = Color( 0.541176, 0.541176, 0.541176, 1 )
+albedo_texture = ExtResource( 1 )
+

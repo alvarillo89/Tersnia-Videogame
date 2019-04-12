@@ -1,0 +1,7 @@
+[gd_resource type="SpatialMaterial" format=2]
+
+[resource]
+flags_transparent = true
+albedo_color = Color( 0.298039, 0.666667, 0.278431, 0.392157 )
+metallic_specular = 1.0
+

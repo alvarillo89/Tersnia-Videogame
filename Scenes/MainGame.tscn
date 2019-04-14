@@ -65,3 +65,6 @@ transform = Transform( -1.60521e-008, 0, -0.36723, 0, 0.36723, 0, 0.36723, 0, -1
 [node name="EnemyTotemRobot" parent="." instance=ExtResource( 12 )]
 transform = Transform( -2.00651e-008, 0, -0.459037, 0, 0.459037, 0, 0.459037, 0, -2.00651e-008, 5.34304, 2.50215, -1.03493 )
 
+[node name="MovementGemOrigin" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -26.994, 12.781, 13.356 )
+

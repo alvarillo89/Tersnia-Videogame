@@ -1,0 +1,18 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Gem Movement.obj-557bf5f004e97ab88ec7f0cc9aea314a.mesh"
+
+[deps]
+
+files=[ "res://.import/Gem Movement.obj-557bf5f004e97ab88ec7f0cc9aea314a.mesh" ]
+
+source_file="res://Art/Gems/Gem Movement.obj"
+dest_files=[ "res://.import/Gem Movement.obj-557bf5f004e97ab88ec7f0cc9aea314a.mesh", "res://.import/Gem Movement.obj-557bf5f004e97ab88ec7f0cc9aea314a.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+optimize_mesh=true

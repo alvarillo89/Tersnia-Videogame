@@ -17,7 +17,7 @@ albedo_color = Color( 0.211765, 0.262745, 1, 1 )
 
 [node name="Base" parent="." instance=ExtResource( 1 )]
 
-[node name="pjMesh" type="MeshInstance" parent="."]
+[node name="pj" type="MeshInstance" parent="."]
 transform = Transform( 0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0.2, 0 )
 mesh = ExtResource( 2 )
 material/0 = ExtResource( 3 )
@@ -40,9 +40,9 @@ material/16 = ExtResource( 4 )
 material/17 = ExtResource( 3 )
 material/18 = ExtResource( 4 )
 
-[node name="StaticBody" type="StaticBody" parent="pjMesh"]
+[node name="StaticBody" type="StaticBody" parent="pj"]
 
-[node name="CollisionShape" type="CollisionShape" parent="pjMesh/StaticBody"]
+[node name="CollisionShape" type="CollisionShape" parent="pj/StaticBody"]
 transform = Transform( 1.418, 0, 0, 0, -7.0097e-008, -1.60363, 0, 1.17608, -5.14082e-008, 0.0118652, 2.09498, -0.0254977 )
 shape = SubResource( 1 )
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Prefabs/Table.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Prefabs/BoneGolem.tscn" type="PackedScene" id=2]
@@ -12,6 +12,8 @@
 [ext_resource path="res://Prefabs/enem_TotemSimbad.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Prefabs/enem_Robot.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Prefabs/enem_TotemRobot.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scripts/TurnManager.gd" type="Script" id=13]
+[ext_resource path="res://Prefabs/HUD.tscn" type="PackedScene" id=14]
 
 [sub_resource type="PlaneMesh" id=1]
 
@@ -29,7 +31,7 @@ transform = Transform( -3.21042e-008, 0, 0.734459, 0, 0.734459, 0, -0.734459, 0,
 transform = Transform( -1.60522e-008, 0, 0.36723, 0, 0.36723, 0, -0.36723, 0, -1.60522e-008, -4.06209, 1.28587, 1.29117 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 0.707107, 0.353553, -0.612373, 0, 0.866026, 0.5, 0.707107, -0.353553, 0.612373, -20.11, 17.0872, 20 )
+transform = Transform( 0.707107, 0.353553, -0.612373, 0, 0.866026, 0.499999, 0.707107, -0.353553, 0.612373, -20.11, 17.0872, 20 )
 light_color = Color( 0.992157, 0.901961, 0.498039, 1 )
 light_indirect_energy = 0.0
 
@@ -68,3 +70,12 @@ transform = Transform( -2.00651e-008, 0, -0.459037, 0, 0.459037, 0, 0.459037, 0,
 [node name="MovementGemOrigin" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -26.994, 12.781, 13.356 )
 
+[node name="TurnManager" type="Spatial" parent="."]
+script = ExtResource( 13 )
+
+[node name="Timer" type="Timer" parent="TurnManager"]
+wait_time = 6.0
+
+[node name="HUD" parent="." instance=ExtResource( 14 )]
+
+[connection signal="timeout" from="TurnManager/Timer" to="TurnManager" method="_on_Timer_timeout"]

@@ -11,7 +11,7 @@ func _ready():
 
 # Cuando se pulsa el botón de pasar turno:
 func _on_SkipTurnButton_pressed():
-	mainScene.get_node("TurnManager").pass_turn()
+	mainScene.get_node("TurnManager").PassTurn()
 	# Resetear el timer:
 	var timer = mainScene.get_node("TurnManager/Timer") 
 	timer.stop()

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/PlayerTurn.wav-5a43960c4f1062d26396451f026ca891.sample"
+
+[deps]
+
+source_file="res://Music/PlayerTurn.wav"
+dest_files=[ "res://.import/PlayerTurn.wav-5a43960c4f1062d26396451f026ca891.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

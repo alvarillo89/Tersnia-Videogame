@@ -1,12 +1,25 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Art/Totems/Totem.obj" type="ArrayMesh" id=1]
-[ext_resource path="res://Art/Totems/m_TotemBoneGolem.tres" type="Material" id=2]
+[ext_resource path="res://Scripts/Totem.gd" type="Script" id=1]
+[ext_resource path="res://Art/Totems/Totem.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://Art/Totems/m_TotemBoneGolem.tres" type="Material" id=3]
+[ext_resource path="res://Music/TotemDestroy.wav" type="AudioStream" id=4]
+[ext_resource path="res://Music/Spawn.wav" type="AudioStream" id=5]
 
 [node name="TotemBoneGolem" type="Spatial"]
+script = ExtResource( 1 )
 
 [node name="Totem" type="MeshInstance" parent="."]
 transform = Transform( 0.2, 0, 0, 0, 0.4, 0, 0, 0, 0.2, 0, 0, 0 )
-mesh = ExtResource( 1 )
-material/0 = ExtResource( 2 )
+mesh = ExtResource( 2 )
+material/0 = ExtResource( 3 )
 
+[node name="Death" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 4 )
+unit_db = 60.0
+
+[node name="Spawn" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 5 )
+unit_db = 70.0
+
+[connection signal="finished" from="Death" to="." method="_on_Death_finished"]

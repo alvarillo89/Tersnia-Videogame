@@ -2,12 +2,10 @@
 
 extends Spatial
 
-# Este diccionario contiene toda la información sobre las entidades en juego:
-var entities
+# Este diccionario contiene la posición de entidades y totems en el juego:
+var table
 
-# Este diccionario contiene toda la información sobre los totems en juego:
-var totems
-
+# Este booleano determina si el jugador puede interactuar con las cosas o no.
 var canIAct
 
 # Elementos seleccionados:
@@ -15,9 +13,13 @@ var selectedGem = null
 var selectedEntity = null
 var selectedSkill = null
 
+# Almacena el número de Tótems destruidos por cada jugador:
+var destroyed = [0,0]
+var gameOver = false
+
 # Gemas del jugador:
 var movementGems = []
-var skillGems = []
+var skillPA = 0
 
 # Para el raycast:
 var from
@@ -25,76 +27,69 @@ var to
 var input = false
 const ray_length = 1000
 
-# Tipos de gemas:
-var gemType
-const MOVEMENT = 0
-const SKILL = 1
-
 # Espacio en pantalla entre dos gemas consecutivas:
 const GEMS_OFFSET = 0.5
 
 # Referencias:
 var camera
 var movInstancePos
-var skiInstancePos
-
 
 func _ready():
-	# Aquí construimos los diccionario de forma estática, en caso de que
-	# exista selección de personajes, deberían crearse en función de los
+	# Aquí construimos el diccionario de forma estática, en caso de que
+	# exista selección de personajes, debería crearse en función de los
 	# personajes seleccionados:
-	entities = {
-		get_node("BoneGolem"): {
-				'pos': Vector2(1,1),
-				'ingame': true,
-				#'hp': get_node("BoneGolem").HP,
-				'hp': 10,
-				'dead': false,
-				'turnsRemainig': 0
-			},
-		get_node("Simbad"): {
-				'pos': Vector2(1,3),
-				'ingame': true,
-				#'hp': get_node("Simbad").HP,
-				'hp': 10,
-				'dead': false,
-				'turnsRemainig': 0
-			},
-		get_node("EnemyRobot"): {
-				'pos': Vector2(8,3),
-				'ingame': true,
-				#'hp': get_node("EnemyRobot").HP,
-				'hp': 10,
-				'dead': false,
-				'turnsRemainig': 0
-			},
-		get_node("EnemySimbad"): {
-				'pos': Vector2(8,1),
-				'ingame': true,
-				#'hp': get_node("EnemySimbad").HP,
-				'hp': 10,
-				'dead': false,
-				'turnsRemainig': 0
-			}
+	table = {
+		get_node("BoneGolem"): Vector2(1,1),
+		get_node("Simbad"): Vector2(1,3),
+		get_node("EnemyRobot"): Vector2(8,3),
+		get_node("EnemySkeleton"): Vector2(8,1),
+		get_node("TotemBoneGolem"): Vector2(0,1),
+		get_node("TotemSimbad"): Vector2(0,3),
+		get_node("EnemyTotemRobot"): Vector2(9,3),
+		get_node("EnemyTotemSkeleton"): Vector2(9,1)
 	}
 	
 	canIAct = true
 	camera = get_node("Camera")
 	movInstancePos = get_node("MovementGemOrigin").global_transform.origin
-	skiInstancePos = get_node("SkillGemOrigin").global_transform.origin
- 
+
 
 func _input(event):
-	if canIAct:
-		# Obtener los parámetros del raycast a lanzar:
-		if event is InputEventMouseButton and event.pressed and event.button_index == 1:
-			from = camera.project_ray_origin(event.position)
-			to = from + camera.project_ray_normal(event.position) * ray_length
-			input = true
-		
-		# Deseleccionar las cosas:
-		if event is InputEventKey and event.pressed and event.scancode == KEY_ESCAPE:
-			DeselectAll()
+	# Obtener los parámetros del raycast a lanzar:
+	if event is InputEventMouseButton and event.pressed and event.button_index == 1 and not gameOver:
+		from = camera.project_ray_origin(event.position)
+		to = from + camera.project_ray_normal(event.position) * ray_length
+		input = true
+	
+	# Deseleccionar las cosas:
+	if event is InputEventKey and event.pressed and event.scancode == KEY_D and not gameOver:
+		get_node("Sound/Deselect").play()
+		DeselectAll()
+	
+	# Quitar:
+	if event is InputEventKey and event.pressed and event.scancode == KEY_ESCAPE:
+		get_tree().quit()
+
+
+func _process(delta):
+	# Fin del juego:
+	if not gameOver:
+		if destroyed[0] == 2:
+			get_node("Sound/MainSong").unit_db = 10.0
+			get_node("Sound/Defeat").play()
+			get_node("HUD/EndGame/CenterContainer/VBoxContainer/Result").text = "DERROTA..."
+			get_node("HUD/EndGame").visible = true
+			get_node("TurnManager/Timer").stop()
+			canIAct = false
+			gameOver = true
+		elif destroyed[1] == 2:
+			get_node("Sound/MainSong").unit_db = 10.0
+			get_node("Sound/Victory").play()
+			get_node("HUD/EndGame/CenterContainer/VBoxContainer/Result").text = "¡VICTORIA!"
+			get_node("HUD/EndGame").visible = true
+			get_node("TurnManager/Timer").stop()
+			canIAct = false
+			gameOver = true
 
 
 func _physics_process(delta):
@@ -105,52 +100,53 @@ func _physics_process(delta):
 		if node != null:
 			match node.name:
 				'pj':
+					get_node("Sound/Select").play()
 					# Desactivar la entidad activa, en caso de que la haya:
 					if selectedEntity != null:
 						selectedEntity.get_node("Arrow").visible = false
 					# Activar la nueva:
 					selectedEntity = node.get_parent()
 					selectedEntity.get_node("Arrow").visible = true
+					get_node("HUD").setSkillDescriptions(selectedEntity)
 				'mg':
-					# Desactivar la gema activa, en caso de que la haya:
-					if selectedGem != null:
-						if gemType == MOVEMENT:
+					if canIAct:
+						get_node("Sound/Gem").play()
+						# Desactivar la gema activa, en caso de que la haya:
+						if selectedGem != null:
 							selectedGem.get_node("mg").set_material_override(load("res://Art/Gems/m_MovGem.tres"))
-						else:
-							selectedGem.get_node("sg").set_material_override(load("res://Art/Gems/m_SkillGem.tres"))
-					# Activar la nueva:
-					node.set_material_override(load("res://Art/Gems/m_Gem_selected.tres"))
-					selectedGem = node.get_parent()
-					gemType = MOVEMENT
-				'sg':
-					# Desactivar la gema activa, en caso de que la haya:
-					if selectedGem != null:
-						if gemType == MOVEMENT:
-							selectedGem.get_node("mg").set_material_override(load("res://Art/Gems/m_MovGem.tres"))
-						else:
-							selectedGem.get_node("sg").set_material_override(load("res://Art/Gems/m_SkillGem.tres"))
-					# Activar la nueva:
-					node.set_material_override(load("res://Art/Gems/m_Gem_selected.tres"))
-					selectedGem = node.get_parent()
-					gemType = SKILL
+						# Desactivar la habilidad activa:
+						deselectSkill()
+						# Activar la nueva:
+						node.set_material_override(load("res://Art/Gems/m_Gem_selected.tres"))
+						selectedGem = node.get_parent()
 				var def:
-					if 'n' in def:
-						# Ha clicado sobre una casilla
-						# Para poder hacer una acción hay que tener una gema y una entidad:
-						if selectedEntity != null and selectedGem != null:
-							if gemType == MOVEMENT:
-								var res = get_node("MoveManager").Move(selectedEntity, node, selectedGem.energy)
+					if canIAct:
+						if 'n' in def:
+							# Ha clicado sobre una casilla
+							# Para poder hacer una acción hay que tener una gema y una entidad:
+							if selectedEntity != null and selectedGem != null:
+								var res = get_node("MoveManager").Move(selectedEntity, node, selectedGem.energy, false)
 								# Si el movimiento tuvo éxito
 								if res:
+									get_node("Sound/Move").play()
 									# Borrar la gema de la mano del jugador:
 									movementGems.erase(selectedGem)
 									selectedGem.queue_free()
 									selectedGem = null
 									Draw()
-							elif gemType == SKILL:
-								# Si es una gema de skill, además se requiere que haya elegido una habilidad:
-								if selectedSkill != null:
-									pass
+								else:
+									get_node("Sound/Error").play()
+							elif selectedEntity != null and selectedSkill != null:
+								var cost = selectedEntity.costs[selectedSkill-1]
+								var res = get_node("SkillManager").Attack(selectedEntity, node, skillPA, selectedSkill)
+								if res:
+									# Eliminar los puntos de ataque:
+									skillPA -= cost
+								else:
+									get_node("Sound/Error").play()
+									
+								# Deseleccionar la habilidad tras lanzarla:
+								deselectSkill()
 
 
 # Lanza un rayo, devuelve el objeto colisionado o null:
@@ -173,14 +169,24 @@ func DeselectAll():
 		selectedEntity = null
 
 	if selectedGem != null:
-		if gemType == MOVEMENT:
-			selectedGem.get_node("mg").set_material_override(load("res://Art/Gems/m_MovGem.tres"))
-		else:
-			selectedGem.get_node("sg").set_material_override(load("res://Art/Gems/m_SkillGem.tres"))
+		selectedGem.get_node("mg").set_material_override(load("res://Art/Gems/m_MovGem.tres"))
 		selectedGem = null
 		
-	if selectedSkill != null:
-		pass
+	selectedSkill = null
+	get_node("HUD").resetHabPanel()
+
+
+# Deselecciona la habilidad activa:
+func deselectSkill():
+	match selectedSkill:
+		1:
+			get_node("HUD/Skills Related/Panel/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/ButtonHab1").set_pressed(false)
+		2:
+			get_node("HUD/Skills Related/Panel/MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer/ButtonHab2").set_pressed(false)
+		3:
+			get_node("HUD/Skills Related/Panel/MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/ButtonHab3").set_pressed(false)
+
+	selectedSkill = null
 
 
 # Dibuja las gemas:
@@ -188,7 +194,7 @@ func Draw():
 	for i in range(len(movementGems)):
 		var tmp = Vector3(i * GEMS_OFFSET, 0.0, i * GEMS_OFFSET)
 		movementGems[i].global_transform.origin = movInstancePos + tmp
-	
-	for i in range(len(skillGems)):
-		var tmp = Vector3(i * GEMS_OFFSET, 0.0, i * GEMS_OFFSET)
-		skillGems[i].global_transform.origin = skiInstancePos + tmp
+
+
+func _on_MainSong_finished():
+	get_node("Sound/MainSong").play()

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/EntityDestroy.wav-4da63b4ade4ee0eeae0aa777f92d6c70.sample"
+
+[deps]
+
+source_file="res://Music/EntityDestroy.wav"
+dest_files=[ "res://.import/EntityDestroy.wav-4da63b4ade4ee0eeae0aa777f92d6c70.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,166 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Scripts/MainMenu.gd" type="Script" id=1]
+[ext_resource path="res://Art/BackGround/Background.jpg" type="Texture" id=2]
+[ext_resource path="res://Art/Logo/Logo2.png" type="Texture" id=3]
+[ext_resource path="res://Fonts/Merienda-Regular.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Music/MenuTheme.wav" type="AudioStream" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 40
+use_mipmaps = true
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 40
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 40
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 40
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 40
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 40
+use_mipmaps = true
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 23
+use_mipmaps = true
+font_data = ExtResource( 4 )
+
+[node name="Menu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="BackGround" type="TextureRect" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -1350.0
+margin_right = 1350.0
+margin_bottom = 1622.0
+texture = ExtResource( 2 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 50.0
+margin_top = 50.0
+margin_right = -50.0
+margin_bottom = -50.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_right = 1820.0
+margin_bottom = 980.0
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer"]
+margin_right = 1820.0
+margin_bottom = 488.0
+size_flags_vertical = 3
+texture = ExtResource( 3 )
+stretch_mode = 6
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 492.0
+margin_right = 1820.0
+margin_bottom = 980.0
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/CenterContainer"]
+margin_left = 696.0
+margin_top = 21.0
+margin_right = 1124.0
+margin_bottom = 466.0
+custom_constants/separation = 11
+
+[node name="Tutorial" type="Button" parent="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer"]
+margin_right = 428.0
+margin_bottom = 65.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 0.968627, 0.870588, 1 )
+disabled = true
+text = "Tutorial"
+flat = true
+
+[node name="PartidaIA" type="Button" parent="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer"]
+margin_top = 76.0
+margin_right = 428.0
+margin_bottom = 141.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 1, 0.968627, 0.870588, 1 )
+text = "Partida contra la IA"
+flat = true
+
+[node name="PartidaMulti" type="Button" parent="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer"]
+margin_top = 152.0
+margin_right = 428.0
+margin_bottom = 217.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 1, 0.968627, 0.870588, 1 )
+disabled = true
+text = "Partida multijugador"
+flat = true
+
+[node name="Inventario" type="Button" parent="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer"]
+margin_top = 228.0
+margin_right = 428.0
+margin_bottom = 293.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 1, 0.968627, 0.870588, 1 )
+disabled = true
+text = "Inventario"
+flat = true
+
+[node name="Tienda" type="Button" parent="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer"]
+margin_top = 304.0
+margin_right = 428.0
+margin_bottom = 369.0
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 1, 0.968627, 0.870588, 1 )
+disabled = true
+text = "Tienda"
+flat = true
+
+[node name="Salir" type="Button" parent="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer"]
+margin_top = 380.0
+margin_right = 428.0
+margin_bottom = 445.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color = Color( 1, 0.968627, 0.870588, 1 )
+text = "Salir"
+flat = true
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -183.0
+margin_top = -108.0
+
+[node name="Label" type="Label" parent="CenterContainer"]
+margin_left = 19.0
+margin_top = 18.0
+margin_right = 164.0
+margin_bottom = 89.0
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 1, 0.968627, 0.870588, 1 )
+text = "0.1.1
+@alvarillo89"
+align = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+autoplay = true
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/PartidaIA" to="." method="_on_PartidaIA_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/Salir" to="." method="_on_Salir_pressed"]

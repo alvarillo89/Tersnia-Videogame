@@ -18,26 +18,26 @@ func ToCellCoordinates(n):
 # Sive para comprobar si puedes moverte hasta una coordenada concreta:
 func CanIMove(entity, coords, energy):
 	# Comprobar que no haya ninguna entidad en esa casilla:
-	var entities = get_parent().entities
-	for v in entities.values():
-		if v['pos'] == coords:
+	var table = get_parent().table
+	for v in table.values():
+		if v == coords:
 			return false 
 
 	# Comprobar que tengo la suficiente energía: (distancia manhattam):
-	var dst = abs(entities[entity]['pos'][0] - coords[0]) + abs(entities[entity]['pos'][1] - coords[1])
+	var dst = abs(table[entity][0] - coords[0]) + abs(table[entity][1] - coords[1])
 	return dst == energy
 
 
-func Move(entity, destiny, energy):
+func Move(entity, destiny, energy, forceMove):
 	# Obtener el número de la casilla clicada:
 	var n = int(destiny.name.replace("n", ""))
 	
 	# Obtener las coordenadas de la celda:
 	var coords = ToCellCoordinates(n)
 
-	if CanIMove(entity, coords, energy):
+	if CanIMove(entity, coords, energy) or forceMove:
 		# Actualizar la posición en el GameManager:
-		get_parent().entities[entity]['pos'] = coords
+		get_parent().table[entity] = coords
 		
 		# Mover a la entidad:
 		var targetPos = destiny.global_transform.origin

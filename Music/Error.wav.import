@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Error.wav-9fd7af9db2a1d58e7e423e88f6c8414b.sample"
+
+[deps]
+
+source_file="res://Music/Error.wav"
+dest_files=[ "res://.import/Error.wav-9fd7af9db2a1d58e7e423e88f6c8414b.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

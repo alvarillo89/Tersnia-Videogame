@@ -16,12 +16,16 @@ _global_script_class_icons={
 [application]
 
 config/name="Los mundos de Tersnia"
+run/main_scene="res://Scenes/MainMenu.tscn"
 config/icon="res://icon.png"
 
 [display]
 
 window/size/width=1920
 window/size/height=1080
+window/energy_saving/keep_screen_on=false
+mouse_cursor/custom_image="res://Art/Portraits/Pointer.png"
+window/stretch/mode="viewport"
 
 [rendering]
 

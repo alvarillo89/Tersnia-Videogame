@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+
+[ext_resource path="res://Art/BackGround/Background.jpg" type="Texture" id=1]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type spatial;
+
+uniform sampler2D Texture : hint_albedo;
+render_mode unshaded;
+
+void fragment(){
+	vec2 waves_uv_offset;
+	waves_uv_offset.x += TIME * 0.01;
+	ALBEDO = texture(Texture, UV + waves_uv_offset).rgb;
+}"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/Texture = ExtResource( 1 )
+

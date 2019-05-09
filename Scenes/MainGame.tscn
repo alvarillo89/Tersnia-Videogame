@@ -100,7 +100,7 @@ spawnPos = Vector2( 8, 3 )
 script = ExtResource( 13 )
 
 [node name="MovementGemOrigin" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -26.4, 11.42, 13.356 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -26.4, 11.2088, 13.356 )
 
 [node name="SkillManager" type="Spatial" parent="."]
 script = ExtResource( 14 )

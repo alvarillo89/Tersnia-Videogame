@@ -50,65 +50,65 @@ func _ready():
 	skeletonHP = get_node("AI Stats/VBoxContainer/SkeletonHP")
 	skeletonTotem = get_node("AI Stats/VBoxContainer/TotemSkeletonHP")
 	
-	simbadHP.value = get_parent().get_node("Simbad").MAX_HP
-	simbadHP.max_value = simbadHP.value
-	simbadTotem.value = get_parent().get_node("TotemSimbad").hp
-	simbadTotem.max_value = simbadTotem.value
+	simbadHP.max_value = get_parent().get_node("Simbad").MAX_HP
+	simbadHP.value = simbadHP.value
+	simbadTotem.max_value = get_parent().get_node("TotemSimbad").currentHp
+	simbadTotem.value = simbadTotem.value
 	
-	boneHP.value = get_parent().get_node("BoneGolem").MAX_HP
-	boneHP.max_value = boneHP.value
-	boneTotem.value = get_parent().get_node("TotemBoneGolem").hp
-	boneTotem.max_value = boneTotem.value
+	boneHP.max_value = get_parent().get_node("BoneGolem").MAX_HP
+	boneHP.value = boneHP.value
+	boneTotem.max_value = get_parent().get_node("TotemBoneGolem").currentHp
+	boneTotem.value = boneTotem.value
 	
-	skeletonHP.value = get_parent().get_node("EnemySkeleton").MAX_HP
-	skeletonHP.max_value = skeletonHP.value
-	skeletonTotem.value = get_parent().get_node("EnemyTotemSkeleton").hp
-	skeletonTotem.max_value = skeletonTotem.value
+	skeletonHP.max_value = get_parent().get_node("EnemySkeleton").MAX_HP
+	skeletonHP.value = skeletonHP.value
+	skeletonTotem.max_value = get_parent().get_node("EnemyTotemSkeleton").currentHp
+	skeletonTotem.value = skeletonTotem.value
 	
-	robotHP.value = get_parent().get_node("EnemyRobot").MAX_HP
-	robotHP.max_value = robotHP.value
-	robotTotem.value = get_parent().get_node("EnemyTotemRobot").hp
-	robotTotem.max_value = robotTotem.value
+	robotHP.max_value = get_parent().get_node("EnemyRobot").MAX_HP
+	robotHP.value = robotHP.value
+	robotTotem.max_value = get_parent().get_node("EnemyTotemRobot").currentHp
+	robotTotem.value = robotTotem.value
 
 
 func _process(delta):
-	if get_parent().get_node("Simbad") != null:
+	if get_parent().has_node("Simbad"):
 		simbadHP.value = get_parent().get_node("Simbad").currentHp
 	else:
 		simbadHP.value = 0
 		
-	if get_parent().get_node("TotemSimbad") != null:
-		simbadTotem.value = get_parent().get_node("TotemSimbad").hp
+	if get_parent().has_node("TotemSimbad"):
+		simbadTotem.value = get_parent().get_node("TotemSimbad").currentHp
 	else:
 		simbadTotem.value = 0
 	
-	if get_parent().get_node("BoneGolem") != null:
+	if get_parent().has_node("BoneGolem"):
 		boneHP.value = get_parent().get_node("BoneGolem").currentHp
 	else:
 		boneHP.value = 0
 	
-	if get_parent().get_node("TotemBoneGolem") != null:
-		boneTotem.value = get_parent().get_node("TotemBoneGolem").hp
+	if get_parent().has_node("TotemBoneGolem"):
+		boneTotem.value = get_parent().get_node("TotemBoneGolem").currentHp
 	else:
 		boneTotem.value = 0
 		
-	if get_parent().get_node("EnemySkeleton") != null:
+	if get_parent().has_node("EnemySkeleton"):
 		skeletonHP.value = get_parent().get_node("EnemySkeleton").currentHp
 	else:
 		skeletonHP.value = 0
 	
-	if get_parent().get_node("EnemyTotemSkeleton") != null:
-		skeletonTotem.value = get_parent().get_node("EnemyTotemSkeleton").hp
+	if get_parent().has_node("EnemyTotemSkeleton"):
+		skeletonTotem.value = get_parent().get_node("EnemyTotemSkeleton").currentHp
 	else:
 		skeletonTotem.value = 0
 	
-	if get_parent().get_node("EnemyRobot") != null:
+	if get_parent().has_node("EnemyRobot"):
 		robotHP.value = get_parent().get_node("EnemyRobot").currentHp
 	else:
 		robotHP.value = 0
 	
-	if get_parent().get_node("EnemyTotemRobot") != null:
-		robotTotem.value = get_parent().get_node("EnemyTotemRobot").hp
+	if get_parent().has_node("EnemyTotemRobot"):
+		robotTotem.value = get_parent().get_node("EnemyTotemRobot").currentHp
 	else:
 		robotTotem.value = 0
 
@@ -141,14 +141,18 @@ func setSkillDescriptions(entity):
 	hab3.text = entity.skillDescriptions[2]
 
 
-# Cuando se pulsa el botón de pasar turno:
-func _on_SkipTurnButton_pressed():
+func SkipTurn():
 	mainScene.get_node("TurnManager").PassTurn()
 	# Resetear el timer:
 	var timer = mainScene.get_node("TurnManager/Timer") 
 	timer.stop()
-	timer.wait_time = 20.0
+	timer.wait_time = 60.0
 	timer.start()
+
+
+# Cuando se pulsa el botón de pasar turno:
+func _on_SkipTurnButton_pressed():
+	SkipTurn()
 
 
 func _on_ButtonHab1_toggled(button_pressed):

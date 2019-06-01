@@ -8,7 +8,7 @@ var skillDescriptions = []
 
 # Parámetros:
 var currentHp
-const MAX_HP = 8
+const MAX_HP = 12
 export (NodePath) var myTotem
 var modifier = 0
 var costs = []
@@ -16,17 +16,17 @@ var ranges = []
 
 
 func _ready():
-	skillDescriptions.append("Alcance: 1\n\nInflige 3 puntos de daño a la\nentidad o tótem objetivo.")
+	skillDescriptions.append("Alcance: 2\n\nInflige 2 puntos de daño a la\nentidad o tótem objetivo.")
 	skillDescriptions.append("Alcance: sobre la entidad\n\nAumenta el daño de la\nsiguiente habilidad\nen un punto.\n(No puede acumularse)")
-	skillDescriptions.append("Alcance: 3\n\nInflige 5 puntos de daño a la\nentidad o tótem objetivo.")
+	skillDescriptions.append("Alcance: 2\n\nInflige 4 puntos de daño a la\nentidad o tótem objetivo.")
 	
 	costs.append(2)
 	costs.append(2)
-	costs.append(4)
+	costs.append(6)
 	
-	ranges.append(1)
+	ranges.append(2)
 	ranges.append(0)
-	ranges.append(3)
+	ranges.append(2)
 	
 	currentHp = MAX_HP
 
@@ -52,10 +52,10 @@ func Hability1(table, cell):
 
 	if target != null:
 		if modifier != 0:
-			target.TakeDamage(3 + modifier)
+			target.TakeDamage(2 + modifier)
 			modifier = 0
 		else:
-			target.TakeDamage(3)
+			target.TakeDamage(2)
 
 
 func Hability2(table, cell):
@@ -73,10 +73,10 @@ func Hability3(table, cell):
 
 	if target != null:
 		if modifier != 0:
-			target.TakeDamage(5 + modifier)
+			target.TakeDamage(4 + modifier)
 			modifier = 0
 		else:
-			target.TakeDamage(5)
+			target.TakeDamage(4)
 
 
 func _on_Death_finished():

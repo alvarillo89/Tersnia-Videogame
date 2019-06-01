@@ -99,6 +99,7 @@ margin_right = 428.0
 margin_bottom = 141.0
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 1, 0.968627, 0.870588, 1 )
+custom_colors/font_color_hover = Color( 1, 0.72549, 0.294118, 1 )
 text = "Partida contra la IA"
 flat = true
 
@@ -138,6 +139,7 @@ margin_right = 428.0
 margin_bottom = 445.0
 custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 1, 0.968627, 0.870588, 1 )
+custom_colors/font_color_hover = Color( 1, 0.72549, 0.294118, 1 )
 text = "Salir"
 flat = true
 

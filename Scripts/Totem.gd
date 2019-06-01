@@ -2,13 +2,14 @@
 
 extends Spatial
 
-export (int) var hp
+export (int) var currentHp
 export (NodePath) var myEntity
 export (int) var myTurn
 
 var entity
 var entityDead
 var remaining
+var MAX_HP
 var spawn
 
 export (Vector2) var spawnPos
@@ -16,6 +17,7 @@ export (Vector2) var spawnPos
 func _ready():
 	entityDead = false
 	remaining = 0
+	MAX_HP = currentHp
 	entity = get_node(myEntity)
 	spawn = toMesh(spawnPos)
 	get_parent().get_node("TurnManager").connect("turn_passed", self, "_on_Turn_Passed")
@@ -26,12 +28,17 @@ func toMesh(cell):
 
 
 func Death():
+	get_parent().get_node("GlobalAI").notifyTotemDeath(self)
 	get_node("Death").play()
 
 
+# Si la entidad está viva recibe la mitad del daño:
 func TakeDamage(damage):
-	hp -= damage
-	if hp <= 0:
+	if not entityDead:
+		damage = floor(damage * 0.5)
+
+	currentHp -= damage
+	if currentHp <= 0:
 		Death()
 
 
@@ -83,6 +90,13 @@ func Spawn():
 					get_parent().get_node("MoveManager").Move(entity, spawn, 1000, true)
 					get_parent().table[myEntity] = spawnPos
 					get_parent().table[target] = newSpawnPos
+	
+	# Actualizar el tablero: hay que sustituir la ruta por el nodo:
+	for k in get_parent().table.keys():
+		if typeof(k) == TYPE_NODE_PATH:
+			var pos = get_parent().table[k]
+			get_parent().table.erase(k)
+			get_parent().table[get_node(k)] = pos
 
 
 func _on_Turn_Passed(turn):

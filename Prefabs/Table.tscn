@@ -749,6 +749,7 @@ transform = Transform( 0.493873, 0, 0, 0, 0.583571, 0, 0, 0, 0.479596, 0.501652,
 shape = SubResource( 1 )
 
 [node name="n47" type="MeshInstance" parent="."]
+editor/display_folded = true
 transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 1.6, 0, 14.4166 )
 mesh = ExtResource( 1 )
 material/0 = ExtResource( 4 )

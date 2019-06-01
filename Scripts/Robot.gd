@@ -8,7 +8,7 @@ var skillDescriptions = []
 
 # Parámetros:
 var currentHp
-const MAX_HP = 6
+const MAX_HP = 10
 export (NodePath) var myTotem
 var modifier = 0
 var costs = []
@@ -17,16 +17,16 @@ var ranges = []
 
 func _ready():
 	skillDescriptions.append("Alcance: 3\n\nInflige un punto de daño al tótem o entidad objetivo.")
-	skillDescriptions.append("Alcance: 3\n\nCura un punto de vida\na la entidad objetivo")
-	skillDescriptions.append("Alcance: Todo el tablero\n\nTeletransporta la entidad a\ncualquier casilla libre del tablero")
+	skillDescriptions.append("Alcance: 3\n\nCura dos puntos de vida\na la entidad objetivo")
+	skillDescriptions.append("Alcance: Sobre la entidad\n\nCura a todas las entidades aliadas.")
 	
-	costs.append(2)
+	costs.append(1)
 	costs.append(3)
 	costs.append(6)
 	
 	ranges.append(3)
 	ranges.append(3)
-	ranges.append(1000)
+	ranges.append(0)
 	
 	currentHp = MAX_HP
 
@@ -65,23 +65,18 @@ func Hability2(table, cell):
 	
 	if target != null:
 		if not "Totem" in target.name:
-			target.currentHp += 1
+			target.currentHp += 2
 			if target.currentHp > target.MAX_HP:
 				target.currentHp = target.MAX_HP
 
 
 func Hability3(table, cell):
 	get_node("Teleport").play()
-	var target = null
+	currentHp = MAX_HP
 	
-	for ent in table.keys():
-		if table[ent] == cell:
-			target = ent
-
-	if target == null:
-		var dst = get_node('../Table/n' + str(cell[0] * 5 + cell[1] + 1))
-		get_parent().get_node("MoveManager").Move(self, dst, 1000, true)
-		table[self] = cell
+	if get_parent().has_node("EnemyTotemSkeleton"):
+		if not get_parent().get_node("EnemyTotemSkeleton").entityDead:
+			get_parent().get_node("EnemySkeleton").currentHp = get_parent().get_node("EnemySkeleton").MAX_HP
 
 
 func _on_Death_finished():

@@ -9,7 +9,6 @@
 [ext_resource path="res://Music/PowerUp.wav" type="AudioStream" id=7]
 [ext_resource path="res://Music/EntityDestroy.wav" type="AudioStream" id=8]
 
-
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.73583
 height = 2.77456

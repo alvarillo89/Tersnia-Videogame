@@ -27,6 +27,10 @@ window/energy_saving/keep_screen_on=false
 mouse_cursor/custom_image="res://Art/Portraits/Pointer.png"
 window/stretch/mode="viewport"
 
+[editor_plugins]
+
+enabled=PoolStringArray( "godot-behavior-tree-plugin" )
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

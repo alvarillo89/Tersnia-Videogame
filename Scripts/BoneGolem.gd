@@ -8,7 +8,7 @@ var skillDescriptions = []
 
 # Parámetros:
 var currentHp
-const MAX_HP = 10
+const MAX_HP = 12
 export (NodePath) var myTotem
 var modifier = 0
 var costs = []

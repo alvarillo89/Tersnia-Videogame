@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Scripts/GameManager.gd" type="Script" id=1]
 [ext_resource path="res://Shaders/3DParallax.tres" type="Material" id=2]
@@ -12,21 +12,22 @@
 [ext_resource path="res://Prefabs/enem_TotemSkeleton.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Prefabs/enem_Robot.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Prefabs/enem_TotemRobot.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Scripts/MoveManager.gd" type="Script" id=13]
-[ext_resource path="res://Scripts/SkillManager.gd" type="Script" id=14]
-[ext_resource path="res://Scripts/TurnManager.gd" type="Script" id=15]
-[ext_resource path="res://Prefabs/HUD.tscn" type="PackedScene" id=16]
-[ext_resource path="res://Music/GameTheme.wav" type="AudioStream" id=17]
-[ext_resource path="res://Music/PlayerTurn.wav" type="AudioStream" id=18]
-[ext_resource path="res://Music/AITurn.wav" type="AudioStream" id=19]
-[ext_resource path="res://Music/Select.wav" type="AudioStream" id=20]
-[ext_resource path="res://Music/countdown-a.wav" type="AudioStream" id=21]
-[ext_resource path="res://Music/Deselect.wav" type="AudioStream" id=22]
-[ext_resource path="res://Music/Gem.wav" type="AudioStream" id=23]
-[ext_resource path="res://Music/Error.wav" type="AudioStream" id=24]
-[ext_resource path="res://Music/Move.wav" type="AudioStream" id=25]
-[ext_resource path="res://Music/Defeat.wav" type="AudioStream" id=26]
-[ext_resource path="res://Music/Victory.wav" type="AudioStream" id=27]
+[ext_resource path="res://Prefabs/GlobalAI.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scripts/MoveManager.gd" type="Script" id=14]
+[ext_resource path="res://Scripts/SkillManager.gd" type="Script" id=15]
+[ext_resource path="res://Scripts/TurnManager.gd" type="Script" id=16]
+[ext_resource path="res://Prefabs/HUD.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Music/GameTheme.wav" type="AudioStream" id=18]
+[ext_resource path="res://Music/PlayerTurn.wav" type="AudioStream" id=19]
+[ext_resource path="res://Music/AITurn.wav" type="AudioStream" id=20]
+[ext_resource path="res://Music/Select.wav" type="AudioStream" id=21]
+[ext_resource path="res://Music/countdown-a.wav" type="AudioStream" id=22]
+[ext_resource path="res://Music/Deselect.wav" type="AudioStream" id=23]
+[ext_resource path="res://Music/Gem.wav" type="AudioStream" id=24]
+[ext_resource path="res://Music/Error.wav" type="AudioStream" id=25]
+[ext_resource path="res://Music/Move.wav" type="AudioStream" id=26]
+[ext_resource path="res://Music/Defeat.wav" type="AudioStream" id=27]
+[ext_resource path="res://Music/Victory.wav" type="AudioStream" id=28]
 
 [sub_resource type="PlaneMesh" id=1]
 
@@ -60,7 +61,7 @@ myTotem = NodePath("../TotemBoneGolem")
 
 [node name="TotemBoneGolem" parent="." instance=ExtResource( 6 )]
 transform = Transform( -2.00651e-008, 0, 0.459037, 0, 0.459037, 0, -0.459037, 0, -2.00651e-008, -5.25322, 2.48671, 1.31591 )
-hp = 15
+currentHp = 15
 myEntity = NodePath("../BoneGolem")
 spawnPos = Vector2( 1, 1 )
 
@@ -70,7 +71,7 @@ myTotem = NodePath("../TotemSimbad")
 
 [node name="TotemSimbad" parent="." instance=ExtResource( 8 )]
 transform = Transform( -2.00651e-008, 0, 0.459037, 0, 0.459037, 0, -0.459037, 0, -2.00651e-008, -5.25349, 2.48637, -1.04109 )
-hp = 10
+currentHp = 15
 myEntity = NodePath("../Simbad")
 spawnPos = Vector2( 1, 3 )
 
@@ -80,7 +81,7 @@ myTotem = NodePath("../EnemyTotemSkeleton")
 
 [node name="EnemyTotemSkeleton" parent="." instance=ExtResource( 10 )]
 transform = Transform( -2.00651e-008, 0, -0.459037, 0, 0.459037, 0, 0.459037, 0, -2.00651e-008, 5.33533, 2.50662, 1.32156 )
-hp = 10
+currentHp = 15
 myEntity = NodePath("../EnemySkeleton")
 myTurn = 1
 spawnPos = Vector2( 8, 1 )
@@ -91,73 +92,75 @@ myTotem = NodePath("../EnemyTotemRobot")
 
 [node name="EnemyTotemRobot" parent="." instance=ExtResource( 12 )]
 transform = Transform( -2.00651e-008, 0, -0.459037, 0, 0.459037, 0, 0.459037, 0, -2.00651e-008, 5.34304, 2.50215, -1.03493 )
-hp = 8
+currentHp = 15
 myEntity = NodePath("../EnemyRobot")
 myTurn = 1
 spawnPos = Vector2( 8, 3 )
 
+[node name="GlobalAI" parent="." instance=ExtResource( 13 )]
+
 [node name="MoveManager" type="Spatial" parent="."]
-script = ExtResource( 13 )
+script = ExtResource( 14 )
 
 [node name="MovementGemOrigin" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -26.4, 11.2088, 13.356 )
 
 [node name="SkillManager" type="Spatial" parent="."]
-script = ExtResource( 14 )
-
-[node name="TurnManager" type="Spatial" parent="."]
 script = ExtResource( 15 )
 
-[node name="Timer" type="Timer" parent="TurnManager"]
-wait_time = 20.0
+[node name="TurnManager" type="Spatial" parent="."]
+script = ExtResource( 16 )
 
-[node name="HUD" parent="." instance=ExtResource( 16 )]
+[node name="Timer" type="Timer" parent="TurnManager"]
+wait_time = 60.0
+
+[node name="HUD" parent="." instance=ExtResource( 17 )]
 
 [node name="Sound" type="Node" parent="."]
 
 [node name="MainSong" type="AudioStreamPlayer3D" parent="Sound"]
-stream = ExtResource( 17 )
+stream = ExtResource( 18 )
 unit_db = 50.0
 autoplay = true
 
 [node name="PlayerTurn" type="AudioStreamPlayer3D" parent="Sound"]
-stream = ExtResource( 18 )
-unit_db = 60.0
-
-[node name="AITurn" type="AudioStreamPlayer3D" parent="Sound"]
 stream = ExtResource( 19 )
 unit_db = 60.0
 
-[node name="Select" type="AudioStreamPlayer3D" parent="Sound"]
+[node name="AITurn" type="AudioStreamPlayer3D" parent="Sound"]
 stream = ExtResource( 20 )
 unit_db = 60.0
 
-[node name="CountDown" type="AudioStreamPlayer3D" parent="Sound"]
+[node name="Select" type="AudioStreamPlayer3D" parent="Sound"]
 stream = ExtResource( 21 )
 unit_db = 60.0
 
-[node name="Deselect" type="AudioStreamPlayer3D" parent="Sound"]
+[node name="CountDown" type="AudioStreamPlayer3D" parent="Sound"]
 stream = ExtResource( 22 )
 unit_db = 60.0
 
-[node name="Gem" type="AudioStreamPlayer3D" parent="Sound"]
+[node name="Deselect" type="AudioStreamPlayer3D" parent="Sound"]
 stream = ExtResource( 23 )
 unit_db = 60.0
 
-[node name="Error" type="AudioStreamPlayer3D" parent="Sound"]
+[node name="Gem" type="AudioStreamPlayer3D" parent="Sound"]
 stream = ExtResource( 24 )
 unit_db = 60.0
 
-[node name="Move" type="AudioStreamPlayer3D" parent="Sound"]
+[node name="Error" type="AudioStreamPlayer3D" parent="Sound"]
 stream = ExtResource( 25 )
 unit_db = 60.0
 
-[node name="Defeat" type="AudioStreamPlayer3D" parent="Sound"]
+[node name="Move" type="AudioStreamPlayer3D" parent="Sound"]
 stream = ExtResource( 26 )
+unit_db = 60.0
+
+[node name="Defeat" type="AudioStreamPlayer3D" parent="Sound"]
+stream = ExtResource( 27 )
 unit_db = 80.0
 
 [node name="Victory" type="AudioStreamPlayer3D" parent="Sound"]
-stream = ExtResource( 27 )
+stream = ExtResource( 28 )
 unit_db = 80.0
 
 [connection signal="timeout" from="TurnManager/Timer" to="TurnManager" method="_on_Timer_timeout"]

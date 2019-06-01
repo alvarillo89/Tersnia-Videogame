@@ -6,12 +6,13 @@ extends Spatial
 signal turn_passed(turn)
 
 # Turno actual: 0 -> jugador 1 -> IA
-var turn = 0
+var turn
 
 # Número de gemas:
 const INITIAL_GEMS = 3
 const PER_TURN_GEMS = 2
 const LIMIT = 10
+const GEMS_LIMIT = 6
 
 # Referencias:
 var timeLabel
@@ -30,47 +31,77 @@ func _ready():
 	PALabel = get_parent().get_node("HUD/Action Points/CenterContainer/HBoxContainer/AP counter")
 	currentPlayerLabel = get_parent().get_node("HUD/Turn related/HBoxContainer/Turn Label")
 	
-	# En principio el jugador es quién empieza:
-	for i in range(INITIAL_GEMS):
-		call_deferred("NewTurn")
+	# Darle gemas a cada jugador:
+	call_deferred("FirstTurn")
 		
 	get_node("Timer").start()
 
 
-# Devuelve la energía en función de una probabilidad:
-func GetEnergy():
-	var prob = randf()
+# Primer turno:
+func FirstTurn():
+	# Le damos las gemas iniciales a cada jugador:
+	# A la IA:
+	turn = 1
+	for i in range(INITIAL_GEMS):
+		NewTurn()
 
-	if prob < 0.1:
-		return 1
-	elif prob < 0.35:
-		return 2
-	elif prob < 0.75:
-		return 3
-	elif prob < 0.9:
-		return 4
+	# Al jugador, que es el que empieza:
+	turn = 0
+	for i in range(INITIAL_GEMS):
+		NewTurn()
+
+
+# Devuelve la energía en función de una probabilidad:
+func GetEnergy(movement):
+	randomize()
+	var prob = randf()
+	
+	if movement:
+		if prob < 0.1:
+			return 1
+		elif prob < 0.35:
+			return 2
+		elif prob < 0.75:
+			return 3
+		elif prob < 0.9:
+			return 4
+		else:
+			return 5
 	else:
-		return 5
+		if prob < 0.1:
+			return 1
+		elif prob < 0.5:
+			return 2
+		elif prob < 0.9:
+			return 3
+		else:
+			return 4
 
 
 # Se llama en cada nuevo turno:
 func NewTurn():
 	if turn == 0:
 		# Añadir gemas de movimiento:
-		if len(get_parent().movementGems) < LIMIT:
+		if len(get_parent().movementGems) < GEMS_LIMIT:
 			var node = movGemScene.instance()
-			node.energy = GetEnergy()
+			node.energy = GetEnergy(true)
 			get_parent().movementGems.append(node)
 			get_parent().add_child(node)
 			get_parent().Draw()
 			
-			# Añadir puntos de acción:
-			get_parent().skillPA += GetEnergy()
-			if get_parent().skillPA > LIMIT:
-				get_parent().skillPA = LIMIT
+		# Añadir puntos de acción:
+		get_parent().skillPA += GetEnergy(false)
+		if get_parent().skillPA > LIMIT:
+			get_parent().skillPA = LIMIT
 	else:
-		# TODO: Turno de la IA
-		pass
+		# Darle a la IA gemas de movimiento:
+		if len(get_parent().get_node("GlobalAI").movementGems) < GEMS_LIMIT:
+			get_parent().get_node("GlobalAI").movementGems.append(GetEnergy(true))
+		
+		# Darle a la IA puntos de acción:
+		get_parent().get_node("GlobalAI").skillPA += GetEnergy(false)
+		if get_parent().get_node("GlobalAI").skillPA > LIMIT:
+			get_parent().get_node("GlobalAI").skillPA = LIMIT
 
 
 # Pasa el turno:
@@ -98,6 +129,9 @@ func PassTurn():
 		
 		for i in range(PER_TURN_GEMS):
 			NewTurn()
+		
+		# Hacemos a la IA ejecutar su turno:
+		get_parent().get_node("GlobalAI").Think()
 
 
 func _process(delta):
